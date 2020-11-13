@@ -1,7 +1,7 @@
 --聖なる夜アステル
 --Holy Knight Astel
 --LUA by Kohana Sonogami
---
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
