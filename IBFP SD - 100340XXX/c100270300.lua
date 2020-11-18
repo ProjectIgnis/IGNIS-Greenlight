@@ -67,7 +67,7 @@ function s.tokencon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tokentg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,01,RACE_FISH,ATTRIBUTE_WATER,POS_FACEUP) end
+	and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_AQUA,ATTRIBUTE_WATER,POS_FACEUP) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
