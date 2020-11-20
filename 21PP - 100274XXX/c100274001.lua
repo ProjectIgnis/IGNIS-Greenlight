@@ -1,6 +1,7 @@
 --エンジェルＯ１
 --Angel O1
 --Scripted by Rundas
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -27,7 +28,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
 end
---Special Summon
 function s.filter(c)
 	return c:IsLevelAbove(7) and not c:IsPublic()
 end
@@ -53,9 +53,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.ShuffleHand(tp)
 	g:DeleteGroup()
 end
---Additional Tribute Summon
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and Duel.GetFlagEffect(tp,id+1)==0
+	return Duel.IsMainPhase() and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and Duel.GetFlagEffect(tp,id+1)==0
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
