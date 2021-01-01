@@ -46,7 +46,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	if tc and tc:IsRelateToEffect(e) and Duel.Damage(p,tc:GetAttack(),REASON_EFFECT) then
+	if tc and tc:IsRelateToEffect(e) and Duel.Damage(p,tc:GetAttack(),REASON_EFFECT)~=0 then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
