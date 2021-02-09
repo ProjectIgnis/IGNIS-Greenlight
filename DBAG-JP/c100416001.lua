@@ -66,7 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
-		c:RegisterEffect(e1)
+		c:RegisterEffect(e1,true)
 	end
 	if c:GetSummonType()==SUMMON_TYPE_SPECIAL and c:IsLocation(LOCATION_MZONE) then
 		local e2=Effect.CreateEffect(c)
