@@ -8,16 +8,16 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.invcon1)
+	e1:SetCondition(s.invcon)
 	e1:SetTarget(s.invtg)
 	e1:SetOperation(s.invop)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone() 
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(s.invcon2)
+	e2:SetCondition(s.subcon)
 	c:RegisterEffect(e2)
 	--to hand
 	local e3=Effect.CreateEffect(c)
@@ -30,10 +30,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={CARD_ABHYSS}
-function s.invcon1(e,tp,eg,ep,ev,re,r,rp)
+function s.invcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
-function s.invcon2(e,tp,eg,ep,ev,re,r,rp)
+function s.subcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonLocation()==LOCATION_GRAVE
 end
 function s.tcfilter(c,e,tp)
@@ -63,8 +63,10 @@ function s.invop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsAbleToGraveAsCost,1,1,REASON_COST)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler() 
