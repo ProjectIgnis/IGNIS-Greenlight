@@ -15,7 +15,7 @@ function Auxiliary.EffectCheck(tp,cons,strings,ops)
 		return sel[choice+1]
 	end
 end
---shortcut to detache a specific amount of materials from an Xyz monster (min=<X=<max). min=nil -> detaches all materials.
+--shortcut to detach a specific amount of materials from an Xyz monster (min=<X=<max). min=nil -> detaches all materials.
 --label=true -> the amount of detached materials will be saved as a label.
 function Auxiliary.doccost(min,max,label)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
