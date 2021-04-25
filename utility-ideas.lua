@@ -18,13 +18,14 @@ end
 --shortcut to detach a specific amount of materials from an Xyz monster (min=<X=<max). min=nil -> detaches all materials.
 --label=true -> the amount of detached materials will be saved as a label.
 function Auxiliary.doccost(min,max,label)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		local ct,eff,set,label=c:GetOverlayCount(),Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK),c:IsSetCard(0x14b),label or false
+		local ct,skip,label=c:GetOverlayCount(),c:IsHasEffect(CARD_NUMERON_NETWORK),label or false
 		local min=min or ct
 		local max=max or min
-		if chk==0 then return c:CheckRemoveOverlayCard(tp,min,REASON_COST) or (eff and set) end
-		if (eff and set) and (ct==0 or (ct>0 and Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1)))) then
+		if chk==0 then return c:CheckRemoveOverlayCard(tp,min,REASON_COST) or skip end
+		if skip and (ct==0 or (ct>0 and Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1)))) then
+			Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
 			return true
 				else c:RemoveOverlayCard(tp,min,max,REASON_COST)
 		end
