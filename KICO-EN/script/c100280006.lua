@@ -23,11 +23,11 @@ end
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:GetTextAttack()==-2 and c:GetLevel()==10 and not c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToHand()
 end
-function s.mfilter(c)
-	return c:IsFaceup() and c:IsCode(CARD_JACK_KNIGHT,CARD_KING_KNIGHT,CARD_QUEEN_KNIGHT)
-end
 function s.sfilter(c)
 	return c:IsSummonable(true,nil) and c:GetLevel()==10
+end
+function s.mfilter(c,code)
+	return c:IsFaceup() and c:IsCode(code)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_HAND,0,1,nil)
@@ -38,8 +38,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_HAND,0,1,nil)
-	local b=Duel.IsExistingMatchingCard(s.mfilter,tp,LOCATION_MZONE,0,1,nil)
-	 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
+	local b=Duel.IsExistingMatchingCard(s.mfilter,tp,LOCATION_ONFIELD,0,1,nil,CARD_JACK_KNIGHT)
+	and Duel.IsExistingMatchingCard(s.mfilter,tp,LOCATION_ONFIELD,0,1,nil,CARD_KING_KNIGHT)
+	and Duel.IsExistingMatchingCard(s.mfilter,tp,LOCATION_ONFIELD,0,1,nil,CARD_QUEEN_KNIGHT)
+	and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
 	if not a and not b then return end
 	if (not a and b) or (b and Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
